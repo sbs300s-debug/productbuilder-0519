@@ -72,6 +72,14 @@ function updateUI() {
     document.getElementById('footer-text').textContent = t.footerText;
     document.getElementById('lang-toggle').textContent = t.langBtn;
 
+    // Contact Form Translations
+    document.getElementById('contact-title').textContent = t.contactTitle;
+    document.getElementById('label-email').textContent = t.labelEmail;
+    document.getElementById('label-message').textContent = t.labelMessage;
+    document.getElementById('submit-btn').textContent = t.submitBtn;
+    document.getElementById('email').placeholder = t.placeholderEmail;
+    document.getElementById('message').placeholder = t.placeholderMessage;
+
     // Refresh mood buttons
     const moodButtonsContainer = document.getElementById('mood-buttons');
     moodButtonsContainer.innerHTML = '';
