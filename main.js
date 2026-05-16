@@ -22,7 +22,14 @@ const translations = {
         privacyTitle: "개인정보처리방침",
         aboutTitle: "서비스 철학",
         aboutContent: "Movie Mood는 단순한 영화 목록 제공을 넘어, 인간의 보편적인 감정과 영화라는 예술 매체를 연결하는 전문 큐레이션 플랫폼입니다.",
-        reactionMsg: "이 서비스가 마음에 드시나요? 지금 기분을 표현해보세요! ✨",
+        reactionMsg: "지금 기분은 어떠신가요? 한 줄 평과 함께 남겨주세요!",
+        fortuneTitle: "오늘의 영화 운세",
+        fortuneDesc: "당신의 기분을 클릭하면 행운의 영화를 뽑아드립니다!",
+        fortuneBtn: "✨ 행운의 영화 뽑기",
+        nicknamePlaceholder: "아이디",
+        commentPlaceholder: "한 줄 평을 남겨보세요!",
+        reactionText: "님이 반응을 남겼어요!",
+        anonymous: "익명의 관객",
         director: "감독",
         year: "개봉",
         moods: {
@@ -56,7 +63,14 @@ const translations = {
         privacyTitle: "Privacy Policy",
         aboutTitle: "Our Philosophy",
         aboutContent: "Movie Mood is a professional curation platform connecting universal human emotions with the art of film.",
-        reactionMsg: "Do you like this service? Express your mood now! ✨",
+        reactionMsg: "How are you feeling now? Leave a mood with a short comment!",
+        fortuneTitle: "Daily Movie Fortune",
+        fortuneDesc: "Click your mood and we'll pick a lucky movie for you!",
+        fortuneBtn: "✨ Pick a Lucky Movie",
+        nicknamePlaceholder: "ID",
+        commentPlaceholder: "Leave a one-line review!",
+        reactionText: " left a reaction!",
+        anonymous: "Anonymous",
         director: "Director",
         year: "Release",
         moods: {
@@ -243,7 +257,13 @@ function updateUI() {
     const aboutContentElements = document.querySelectorAll('.about-content-text');
     aboutContentElements.forEach(el => el.textContent = t.aboutContent);
     document.getElementById('reaction-msg').textContent = t.reactionMsg;
+    
+    document.getElementById('fortune-title').textContent = t.fortuneTitle;
+    document.getElementById('fortune-desc').textContent = t.fortuneDesc;
+    document.getElementById('fortune-btn').textContent = t.fortuneBtn;
+    
     document.getElementById('user-nickname').placeholder = t.nicknamePlaceholder;
+    document.getElementById('user-comment').placeholder = t.commentPlaceholder;
 
     const privacyLinkText = document.getElementById('privacy-link-text');
     if (privacyLinkText) privacyLinkText.textContent = t.privacyTitle;
@@ -310,6 +330,20 @@ function showRecommendations(mood) {
 
     area.classList.add('visible');
     area.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Fortune Movie Logic
+const fortuneBtn = document.getElementById('fortune-btn');
+if (fortuneBtn) {
+    fortuneBtn.onclick = function() {
+        const moods = Object.keys(movieData);
+        const randomMood = moods[Math.floor(Math.random() * moods.length)];
+        const movies = movieData[randomMood];
+        const luckyMovie = movies[Math.floor(Math.random() * movies.length)];
+        
+        alert(`✨ ${translations[currentLang].fortuneTitle} ✨\n\n[${luckyMovie.title[currentLang]}]\n${luckyMovie.desc[currentLang]}`);
+        showRecommendations(randomMood);
+    };
 }
 
 // Mood Reactions Logic
