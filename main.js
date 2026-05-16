@@ -126,7 +126,10 @@ function showRecommendations(mood) {
     const grid = document.getElementById('movie-grid');
     grid.innerHTML = '';
 
-    movieData[mood].forEach(movie => {
+    // Shuffle movies to show different order each time
+    const shuffledMovies = [...movieData[mood]].sort(() => Math.random() - 0.5);
+
+    shuffledMovies.forEach(movie => {
         const card = document.createElement('div');
         card.className = 'movie-card';
         card.innerHTML = `
