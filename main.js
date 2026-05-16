@@ -19,6 +19,7 @@ const translations = {
         privacyTitle: "개인정보처리방침",
         aboutTitle: "서비스 철학",
         aboutContent: "Movie Mood는 단순한 영화 목록 제공을 넘어, 인간의 보편적인 감정과 영화라는 예술 매체를 연결하는 전문 큐레이션 플랫폼입니다.",
+        reactionMsg: "이 서비스가 마음에 드시나요? 지금 기분을 표현해보세요! ✨",
         director: "감독",
         year: "개봉",
         moods: {
@@ -49,6 +50,7 @@ const translations = {
         privacyTitle: "Privacy Policy",
         aboutTitle: "Our Philosophy",
         aboutContent: "Movie Mood is a professional curation platform connecting universal human emotions with the art of film.",
+        reactionMsg: "Do you like this service? Express your mood now! ✨",
         director: "Director",
         year: "Release",
         moods: {
@@ -234,6 +236,7 @@ function updateUI() {
     
     const aboutContentElements = document.querySelectorAll('.about-content-text');
     aboutContentElements.forEach(el => el.textContent = t.aboutContent);
+    document.getElementById('reaction-msg').textContent = t.reactionMsg;
 
     const privacyLinkText = document.getElementById('privacy-link-text');
     if (privacyLinkText) privacyLinkText.textContent = t.privacyTitle;
@@ -302,6 +305,33 @@ function showRecommendations(mood) {
     area.scrollIntoView({ behavior: 'smooth' });
 }
 
+// Mood Reactions Logic
+const reactionButtons = document.querySelectorAll('.reaction-btn');
+
+function initReactions() {
+    reactionButtons.forEach(btn => {
+        const mood = btn.dataset.mood;
+        const countId = `count-${mood}`;
+        
+        let count = parseInt(localStorage.getItem(`reaction-${mood}`));
+        if (isNaN(count)) {
+            count = Math.floor(Math.random() * 50) + 10;
+            localStorage.setItem(`reaction-${mood}`, count);
+        }
+        
+        document.getElementById(countId).textContent = count;
+        
+        btn.onclick = function() {
+            if (btn.classList.contains('clicked')) return;
+            
+            btn.classList.add('clicked');
+            count++;
+            document.getElementById(countId).textContent = count;
+            localStorage.setItem(`reaction-${mood}`, count);
+        };
+    });
+}
+
 const langSelect = document.getElementById('lang-select');
 if (langSelect) {
     langSelect.addEventListener('change', (e) => {
@@ -330,5 +360,12 @@ if (backToTopBtn) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 }
+
+// Update UI including reactions
+const originalUpdateUI = updateUI;
+updateUI = function() {
+    originalUpdateUI();
+    initReactions();
+};
 
 updateUI();

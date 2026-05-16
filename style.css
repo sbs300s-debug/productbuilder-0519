@@ -313,6 +313,81 @@ main {
     transform: translateY(-2px);
 }
 
+.mood-reactions {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    border: 2px dashed var(--primary-color);
+}
+
+#reaction-msg {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.reaction-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.reaction-btn {
+    background: var(--card-bg);
+    border: none;
+    padding: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+}
+
+.reaction-btn:hover {
+    transform: translateY(-10px) scale(1.1);
+    background-color: var(--primary-color);
+}
+
+.reaction-btn:hover .emoji {
+    transform: scale(1.2);
+}
+
+.reaction-btn:hover .count {
+    color: white;
+}
+
+.reaction-btn .emoji {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    transition: 0.3s;
+}
+
+.reaction-btn .count {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.reaction-btn.clicked {
+    animation: bounce 0.5s;
+    background-color: var(--primary-color);
+}
+
+.reaction-btn.clicked .count {
+    color: white;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
 #back-to-top {
     display: none;
     position: fixed;

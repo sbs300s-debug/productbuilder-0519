@@ -51,6 +51,33 @@
 
         <section id="comment-area" class="comment-area">
             <h2 id="comment-title">시청 후기 및 커뮤니티</h2>
+            
+            <div class="mood-reactions" id="mood-reactions">
+                <p id="reaction-msg">이 서비스가 마음에 드시나요? 지금 기분을 표현해보세요! ✨</p>
+                <div class="reaction-buttons">
+                    <button class="reaction-btn" data-mood="love">
+                        <span class="emoji">🥰</span>
+                        <span class="count" id="count-love">0</span>
+                    </button>
+                    <button class="reaction-btn" data-mood="funny">
+                        <span class="emoji">🤣</span>
+                        <span class="count" id="count-funny">0</span>
+                    </button>
+                    <button class="reaction-btn" data-mood="wow">
+                        <span class="emoji">😮</span>
+                        <span class="count" id="count-wow">0</span>
+                    </button>
+                    <button class="reaction-btn" data-mood="sad">
+                        <span class="emoji">🥺</span>
+                        <span class="count" id="count-sad">0</span>
+                    </button>
+                    <button class="reaction-btn" data-mood="good">
+                        <span class="emoji">👍</span>
+                        <span class="count" id="count-good">0</span>
+                    </button>
+                </div>
+            </div>
+
             <script src="https://utteranc.es/client.js"
                     repo="sbs300s-debug/product-builder-lecture"
                     issue-term="pathname"
