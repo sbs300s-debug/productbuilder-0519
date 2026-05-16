@@ -54,6 +54,11 @@
             
             <div class="mood-reactions" id="mood-reactions">
                 <p id="reaction-msg">이 서비스가 마음에 드시나요? 지금 기분을 표현해보세요! ✨</p>
+                
+                <div class="nickname-container">
+                    <input type="text" id="user-nickname" placeholder="아이디를 입력하세요" maxlength="10">
+                </div>
+
                 <div class="reaction-buttons">
                     <button class="reaction-btn" data-mood="love">
                         <span class="emoji">🥰</span>
@@ -75,6 +80,12 @@
                         <span class="emoji">👍</span>
                         <span class="count" id="count-good">0</span>
                     </button>
+                </div>
+
+                <div class="reaction-feed">
+                    <ul id="reaction-list">
+                        <!-- Reaction items will be added here -->
+                    </ul>
                 </div>
             </div>
 

@@ -13,6 +13,9 @@ const translations = {
         submitBtn: "문의 메시지 보내기",
         placeholderEmail: "답변 받으실 이메일을 입력하세요.",
         placeholderMessage: "제휴 제안이나 서비스 피드백을 상세히 남겨주세요.",
+        nicknamePlaceholder: "아이디를 입력하세요",
+        reactionText: "님이 반응을 남겼어요!",
+        anonymous: "익명의 관객",
         langName: "한국어",
         themeDark: "다크 모드",
         themeLight: "라이트 모드",
@@ -44,6 +47,9 @@ const translations = {
         submitBtn: "Send Message",
         placeholderEmail: "Enter email to receive a reply.",
         placeholderMessage: "Please leave your partnership proposals or feedback.",
+        nicknamePlaceholder: "Enter your ID",
+        reactionText: " left a reaction!",
+        anonymous: "Anonymous",
         langName: "English",
         themeDark: "Dark Mode",
         themeLight: "Light Mode",
@@ -237,6 +243,7 @@ function updateUI() {
     const aboutContentElements = document.querySelectorAll('.about-content-text');
     aboutContentElements.forEach(el => el.textContent = t.aboutContent);
     document.getElementById('reaction-msg').textContent = t.reactionMsg;
+    document.getElementById('user-nickname').placeholder = t.nicknamePlaceholder;
 
     const privacyLinkText = document.getElementById('privacy-link-text');
     if (privacyLinkText) privacyLinkText.textContent = t.privacyTitle;
@@ -309,9 +316,26 @@ function showRecommendations(mood) {
 const reactionButtons = document.querySelectorAll('.reaction-btn');
 
 function initReactions() {
+    const reactionList = document.getElementById('reaction-list');
+    const nicknameInput = document.getElementById('user-nickname');
+    
+    // Load saved nickname
+    const savedName = localStorage.getItem('userNickname');
+    if (savedName) nicknameInput.value = savedName;
+
+    // Add some initial mock reactions if list is empty
+    if (reactionList.children.length === 0) {
+        const mockNames = ["MovieLover77", "CinemaStar", "무비마스터", "PopcornFan"];
+        const emojis = ["🥰", "🤣", "😮", "👍"];
+        for(let i=0; i<3; i++) {
+            addReactionToFeed(mockNames[i], emojis[i]);
+        }
+    }
+
     reactionButtons.forEach(btn => {
         const mood = btn.dataset.mood;
         const countId = `count-${mood}`;
+        const emoji = btn.querySelector('.emoji').textContent;
         
         let count = parseInt(localStorage.getItem(`reaction-${mood}`));
         if (isNaN(count)) {
@@ -324,12 +348,40 @@ function initReactions() {
         btn.onclick = function() {
             if (btn.classList.contains('clicked')) return;
             
+            const nickname = nicknameInput.value.trim() || translations[currentLang].anonymous;
+            localStorage.setItem('userNickname', nicknameInput.value); // Save current input
+            
             btn.classList.add('clicked');
             count++;
             document.getElementById(countId).textContent = count;
             localStorage.setItem(`reaction-${mood}`, count);
+            
+            addReactionToFeed(nickname, emoji);
         };
     });
+}
+
+function addReactionToFeed(name, emoji) {
+    const reactionList = document.getElementById('reaction-list');
+    const t = translations[currentLang];
+    
+    const li = document.createElement('li');
+    li.className = 'reaction-item';
+    li.innerHTML = `
+        <span><span class="user-id">${name}</span>${t.reactionText}</span>
+        <span class="emoji">${emoji}</span>
+    `;
+    
+    reactionList.appendChild(li);
+    
+    // Keep only last 10
+    if (reactionList.children.length > 10) {
+        reactionList.removeChild(reactionList.firstChild);
+    }
+
+    // Scroll to bottom
+    const feed = document.querySelector('.reaction-feed');
+    feed.scrollTop = feed.scrollHeight;
 }
 
 const langSelect = document.getElementById('lang-select');
