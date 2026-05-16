@@ -81,6 +81,7 @@ function updateUI() {
     document.getElementById('hero-msg').textContent = t.heroMsg;
     document.getElementById('hero-submsg').textContent = t.heroSubmsg;
     document.getElementById('result-title').textContent = t.resultTitle;
+    document.getElementById('comment-title').textContent = t.commentTitle;
     document.getElementById('footer-text').textContent = t.footerText;
     document.getElementById('lang-toggle').textContent = t.langBtn;
 
