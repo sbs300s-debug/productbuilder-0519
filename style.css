@@ -1,26 +1,52 @@
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --header-bg: #333;
+    --header-text: #fff;
+    --footer-bg: #333;
+    --footer-text: #fff;
+}
+
+body.dark-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --header-bg: #000;
+    --header-text: #ddd;
+    --footer-bg: #000;
+    --footer-text: #ddd;
+}
 
 body {
     font-family: sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--header-bg);
+    color: var(--header-text);
     padding: 1rem;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
 }
 
 main {
     padding: 1rem;
+    margin-bottom: 4rem; /* Space for fixed footer */
 }
 
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     padding: 1rem;
     text-align: center;
     position: fixed;
@@ -31,4 +57,17 @@ footer {
 hairstyle-recommender {
     display: block;
     margin-top: 2rem;
+}
+
+#theme-toggle {
+    background: none;
+    border: 1px solid var(--header-text);
+    color: var(--header-text);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
