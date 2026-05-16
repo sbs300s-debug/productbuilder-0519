@@ -336,10 +336,14 @@ main {
 }
 
 .nickname-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
     margin-bottom: 1.5rem;
 }
 
 #user-nickname {
+    width: 100px;
     padding: 0.6rem 1rem;
     border: 2px solid var(--primary-color);
     border-radius: 50px;
@@ -348,59 +352,92 @@ main {
     text-align: center;
     font-weight: 600;
     outline: none;
+}
+
+#user-comment {
+    flex: 1;
+    max-width: 300px;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--secondary-color);
+    border-radius: 50px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    outline: none;
     transition: 0.3s;
 }
 
-#user-nickname:focus {
-    box-shadow: 0 0 10px var(--primary-color);
-    transform: scale(1.05);
+#user-comment:focus {
+    border-color: var(--primary-color);
 }
 
 .reaction-feed {
     margin-top: 2rem;
-    max-height: 150px;
+    max-height: 300px;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.05);
     border-radius: 15px;
-    padding: 1rem;
-}
-
-body.dark-mode .reaction-feed {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-#reaction-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 0.5rem;
+    padding: 1.5rem;
 }
 
 .reaction-item {
     font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    padding: 0.8rem;
     background: var(--card-bg);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: var(--shadow);
-    animation: slideIn 0.3s ease-out;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.reaction-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
+.reaction-content {
+    text-align: left;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--secondary-color);
+    font-style: italic;
+    color: var(--text-color);
 }
 
-.reaction-item .user-id {
-    font-weight: bold;
+.reply-btn {
+    font-size: 0.75rem;
     color: var(--primary-color);
+    background: none;
+    border: 1px solid var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    align-self: flex-end;
 }
 
-.reaction-btn {
+.reply-item {
+    margin-left: 1.5rem;
+    background-color: var(--secondary-color);
+    border-left: 3px solid var(--primary-color);
+    font-size: 0.85rem;
+    padding: 0.6rem;
+    border-radius: 8px;
+    margin-top: -0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.reply-item .admin-tag {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+}
+
+#user-nickname:focus {
     background: var(--card-bg);
     border: none;
     padding: 1rem;

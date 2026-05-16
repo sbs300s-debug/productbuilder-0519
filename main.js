@@ -318,18 +318,20 @@ const reactionButtons = document.querySelectorAll('.reaction-btn');
 function initReactions() {
     const reactionList = document.getElementById('reaction-list');
     const nicknameInput = document.getElementById('user-nickname');
+    const commentInput = document.getElementById('user-comment');
     
-    // Load saved nickname
     const savedName = localStorage.getItem('userNickname');
     if (savedName) nicknameInput.value = savedName;
 
-    // Add some initial mock reactions if list is empty
     if (reactionList.children.length === 0) {
-        const mockNames = ["MovieLover77", "CinemaStar", "무비마스터", "PopcornFan"];
-        const emojis = ["🥰", "🤣", "😮", "👍"];
-        for(let i=0; i<3; i++) {
-            addReactionToFeed(mockNames[i], emojis[i]);
-        }
+        const mockData = [
+            { name: "MovieLover77", emoji: "🥰", msg: "정말 고품질 영화들이 많네요!", reply: "감사합니다! 영화 덕후님의 취향을 저격했길 바랍니다. 😊" },
+            { name: "무비마스터", emoji: "👍", msg: "다국어 지원이 신기해요.", reply: "글로벌 영화 팬들을 위해 준비했습니다! 🌍" }
+        ];
+        mockData.forEach(data => {
+            addReactionToFeed(data.name, data.emoji, data.msg);
+            if (data.reply) addReplyToItem(reactionList.lastChild, data.reply);
+        });
     }
 
     reactionButtons.forEach(btn => {
@@ -346,42 +348,50 @@ function initReactions() {
         document.getElementById(countId).textContent = count;
         
         btn.onclick = function() {
-            if (btn.classList.contains('clicked')) return;
-            
             const nickname = nicknameInput.value.trim() || translations[currentLang].anonymous;
-            localStorage.setItem('userNickname', nicknameInput.value); // Save current input
+            const message = commentInput.value.trim();
+            localStorage.setItem('userNickname', nicknameInput.value);
             
             btn.classList.add('clicked');
             count++;
             document.getElementById(countId).textContent = count;
             localStorage.setItem(`reaction-${mood}`, count);
             
-            addReactionToFeed(nickname, emoji);
+            addReactionToFeed(nickname, emoji, message);
+            commentInput.value = ''; // Reset message
         };
     });
 }
 
-function addReactionToFeed(name, emoji) {
+function addReactionToFeed(name, emoji, msg) {
     const reactionList = document.getElementById('reaction-list');
     const t = translations[currentLang];
     
     const li = document.createElement('li');
     li.className = 'reaction-item';
     li.innerHTML = `
-        <span><span class="user-id">${name}</span>${t.reactionText}</span>
-        <span class="emoji">${emoji}</span>
+        <div class="reaction-header">
+            <span><span class="user-id">${name}</span>${t.reactionText}</span>
+            <span class="emoji">${emoji}</span>
+        </div>
+        ${msg ? `<div class="reaction-content">${msg}</div>` : ''}
+        <button class="reply-btn">Reply</button>
     `;
     
-    reactionList.appendChild(li);
-    
-    // Keep only last 10
-    if (reactionList.children.length > 10) {
-        reactionList.removeChild(reactionList.firstChild);
-    }
+    li.querySelector('.reply-btn').onclick = function() {
+        const replyMsg = prompt(currentLang === 'ko' ? "답글을 입력하세요:" : "Enter your reply:");
+        if (replyMsg) addReplyToItem(li, replyMsg);
+    };
 
-    // Scroll to bottom
-    const feed = document.querySelector('.reaction-feed');
-    feed.scrollTop = feed.scrollHeight;
+    reactionList.appendChild(li);
+    if (reactionList.children.length > 20) reactionList.removeChild(reactionList.firstChild);
+}
+
+function addReplyToItem(parentLi, replyMsg) {
+    const replyDiv = document.createElement('div');
+    replyDiv.className = 'reply-item';
+    replyDiv.innerHTML = `<span class="admin-tag">Owner</span> ${replyMsg}`;
+    parentLi.after(replyDiv);
 }
 
 const langSelect = document.getElementById('lang-select');
