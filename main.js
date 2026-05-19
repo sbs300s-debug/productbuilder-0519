@@ -17,7 +17,7 @@ const translations = {
     alert_birthdate_invalid: "생년월일을 다시 확인해주세요.",
     lotto_set_label: "세트",
     lotto_bonus_label: "+ 보너스",
-    contactTitle: "제휴 문의",
+    contactTitle: "제휴 문의 (Contact)",
     contactDesc: "NOVAIX와 함께 새로운 가치를 만들어가실 파트너분들의 연락을 기다립니다.<br>아래 양식을 작성해 주시면 검토 후 연락드리겠습니다.",
     form_name: "성함/업체명",
     form_email: "이메일 주소",
@@ -71,13 +71,13 @@ const translations = {
   },
   ja: {
     tagline: "AIとデザインで新しい可能性を作るクリエイティブスタジオ",
-    intro: "NOVAIXはAI技術と感覚的なデザインを組み合わせ、ブランド、詳細ページ、コンテンツ、ウェブページの制作を支援するクリエイティブスタジオです。",
+    intro: "NOVAIXはAI技術と感覚적인 디자인을 결합하여 브랜드, 상세페이지, 콘텐츠, 웹페이지 제작을 돕는 크리에이티브 스튜디오입니다.",
     serviceResultDefault: "ご希望の分野をクリックしてください。",
-    card_title_ai: "AIデザイン",
+    card_title_ai: "AI Design",
     card_desc_ai: "AIを活用した迅速でスタイリッシュなデザイン作業",
-    card_title_detail: "詳細ページ",
+    card_title_detail: "Detail Page",
     card_desc_detail: "製品の長所を強調する詳細ページの構成",
-    card_title_creative: "クリエイティブ",
+    card_title_creative: "Creative",
     card_desc_creative: "ブランドに合わせたコンテンツとウェブページの制作",
     lottoTitle: "バイオリズムロト番号生成器",
     lottoDesc: "生年月日を入力すると、今日のバイオリズムを計算し、<br>あなた専用のロト番号5セットとボーナス番号を提案します。",
@@ -99,15 +99,15 @@ const translations = {
     placeholder_subject: "件名を入力してください。",
     placeholder_message: "お問い合わせ内容を詳しくご記入ください。",
     service: {
-      ai: "AIデザインは、人工知能を活用して迅速かつ効率的に案を作成します。ブランドのアイデンティティに合った感覚的なデザインを体験してください。",
+      ai: "AIデザインは、人工知能を活用して迅速かつ効率的に案を作成します。ブランドのアイ덴티티에 맞는 감각적인 디자인을 만나보세요.",
       detail: "詳細ページは、顧客の購入を誘導する重要な要素です。製品の特徴を分析し、説得力のあるストーリーで構成します。",
-      creative: "クリエイティブサービスは、独創的なコンテンツとウェブページを通じてブランド価値を高めます。ユーザーの目を引く特別な体験を創造してください。"
+      creative: "クリエイティブサービスは、独創的なコンテンツとウェブ페이지를 통해 브랜드 가치를 높입니다. 사용자의 시선을 사로잡는 특별한 경험을 만들어보세요."
     }
   },
   zh: {
     tagline: "用AI与设计创造新可能性的创意工作室",
     intro: "NOVAIX 是结合 AI 技术与现代设计的创意工作室，致力于品牌、详情页、内容及网页制作。",
-    serviceResultDefault: "请点击您感兴趣의领域。",
+    serviceResultDefault: "请点击您感兴趣的领域。",
     card_title_ai: "AI设计",
     card_desc_ai: "利用AI进行快速且富有感性的设计工作",
     card_title_detail: "详情页",
@@ -129,38 +129,65 @@ const translations = {
     form_subject: "咨询主题",
     form_message: "咨询内容",
     form_submit: "提交咨询",
-    placeholder_name: "请输入您的姓名或公司名称。",
+    placeholder_name: "请输入您的姓名 or 公司名称。",
     placeholder_email: "example@email.com",
     placeholder_subject: "请输入咨询主题。",
     placeholder_message: "请详细说明您的咨询内容。",
     service: {
         ai: "AI设计利用人工智能快速高效地制作设计草案。探索符合品牌身份的感性设计。",
         detail: "详情页是引导客户购买的关键。通过分析产品特长，构建具有说服力的故事情节。",
-        creative: "创意服务通过独创性的内容和网页提升品牌价值。创造吸引用户注意力的特别体验。"
+        creative: "创意服务通过独创性的内容和网页提升 brand 价值。创造吸引用户注意力的特别体验。"
     }
   }
 };
 
 function changeLanguage(lang) {
-  document.documentElement.lang = lang;
-  document.querySelector('.tagline').textContent = translations[lang].tagline;
-  document.querySelector('.intro').textContent = translations[lang].intro;
-  document.getElementById('serviceResult').textContent = translations[lang].serviceResultDefault;
+  if (!translations[lang]) return;
   
-  document.getElementById('card-title-ai').textContent = translations[lang].card_title_ai;
-  document.getElementById('card-desc-ai').textContent = translations[lang].card_desc_ai;
-  document.getElementById('card-title-detail').textContent = translations[lang].card_title_detail;
-  document.getElementById('card-desc-detail').textContent = translations[lang].card_desc_detail;
-  document.getElementById('card-title-creative').textContent = translations[lang].card_title_creative;
-  document.getElementById('card-desc-creative').textContent = translations[lang].card_desc_creative;
+  document.documentElement.lang = lang;
+  
+  const elTagline = document.querySelector('.tagline');
+  if (elTagline) elTagline.textContent = translations[lang].tagline;
+  
+  const elIntro = document.querySelector('.intro');
+  if (elIntro) elIntro.textContent = translations[lang].intro;
+  
+  const elServiceResult = document.getElementById('serviceResult');
+  if (elServiceResult) elServiceResult.textContent = translations[lang].serviceResultDefault;
+  
+  const elAiTitle = document.getElementById('card-title-ai');
+  if (elAiTitle) elAiTitle.textContent = translations[lang].card_title_ai;
+  
+  const elAiDesc = document.getElementById('card-desc-ai');
+  if (elAiDesc) elAiDesc.textContent = translations[lang].card_desc_ai;
+  
+  const elDetailTitle = document.getElementById('card-title-detail');
+  if (elDetailTitle) elDetailTitle.textContent = translations[lang].card_title_detail;
+  
+  const elDetailDesc = document.getElementById('card-desc-detail');
+  if (elDetailDesc) elDetailDesc.textContent = translations[lang].card_desc_detail;
+  
+  const elCreativeTitle = document.getElementById('card-title-creative');
+  if (elCreativeTitle) elCreativeTitle.textContent = translations[lang].card_title_creative;
+  
+  const elCreativeDesc = document.getElementById('card-desc-creative');
+  if (elCreativeDesc) elCreativeDesc.textContent = translations[lang].card_desc_creative;
 
-  document.getElementById('lottoTitle').textContent = translations[lang].lottoTitle;
-  document.getElementById('lottoDesc').innerHTML = translations[lang].lottoDesc;
-  document.getElementById('lottoButton').textContent = translations[lang].lottoButton;
+  const elLottoTitle = document.getElementById('lottoTitle');
+  if (elLottoTitle) elLottoTitle.textContent = translations[lang].lottoTitle;
+  
+  const elLottoDesc = document.getElementById('lottoDesc');
+  if (elLottoDesc) elLottoDesc.innerHTML = translations[lang].lottoDesc;
+  
+  const elLottoButton = document.getElementById('lottoButton');
+  if (elLottoButton) elLottoButton.textContent = translations[lang].lottoButton;
 
-  // 제휴 문의 섹션 번역
-  document.getElementById('contactTitle').textContent = translations[lang].contactTitle;
-  document.getElementById('contactDesc').innerHTML = translations[lang].contactDesc;
+  // 제휴 문의 섹션 번역 (안전하게 처리)
+  const elContactTitle = document.getElementById('contactTitle');
+  if (elContactTitle) elContactTitle.textContent = translations[lang].contactTitle;
+  
+  const elContactDesc = document.getElementById('contactDesc');
+  if (elContactDesc) elContactDesc.innerHTML = translations[lang].contactDesc;
   
   const labels = document.querySelectorAll('.contact-form label');
   if (labels.length >= 4) {
@@ -170,17 +197,28 @@ function changeLanguage(lang) {
     labels[3].textContent = translations[lang].form_message;
   }
 
-  document.getElementById('name').placeholder = translations[lang].placeholder_name;
-  document.getElementById('email').placeholder = translations[lang].placeholder_email;
-  document.getElementById('subject').placeholder = translations[lang].placeholder_subject;
-  document.getElementById('message').placeholder = translations[lang].placeholder_message;
-  document.querySelector('.submit-button').textContent = translations[lang].form_submit;
+  const elName = document.getElementById('name');
+  if (elName) elName.placeholder = translations[lang].placeholder_name;
+  
+  const elEmail = document.getElementById('email');
+  if (elEmail) elEmail.placeholder = translations[lang].placeholder_email;
+  
+  const elSubject = document.getElementById('subject');
+  if (elSubject) elSubject.placeholder = translations[lang].placeholder_subject;
+  
+  const elMessage = document.getElementById('message');
+  if (elMessage) elMessage.placeholder = translations[lang].placeholder_message;
+  
+  const elSubmit = document.querySelector('.submit-button');
+  if (elSubmit) elSubmit.textContent = translations[lang].form_submit;
 }
 
 function showService(service) {
   const lang = document.documentElement.lang || 'ko';
   const serviceResult = document.getElementById("serviceResult");
-  serviceResult.textContent = translations[lang].service[service];
+  if (serviceResult && translations[lang].service[service]) {
+    serviceResult.textContent = translations[lang].service[service];
+  }
 }
 
 function getBallColor(num) {
@@ -213,16 +251,19 @@ function calcBiorhythm(days, cycle) {
 function updateBioUI(idText, idBar, value) {
   const percent = Math.round(value * 100);
   const displayPercent = Math.round((value + 1) * 50);
+  const elText = document.getElementById(idText);
+  const elBar = document.getElementById(idBar);
 
-  document.getElementById(idText).textContent = percent + "%";
-  document.getElementById(idBar).style.width = displayPercent + "%";
-
-  if (percent >= 50) {
-    document.getElementById(idBar).style.background = "#22c55e";
-  } else if (percent >= 0) {
-    document.getElementById(idBar).style.background = "#7c3aed";
-  } else {
-    document.getElementById(idBar).style.background = "#ef4444";
+  if (elText) elText.textContent = percent + "%";
+  if (elBar) {
+    elBar.style.width = displayPercent + "%";
+    if (percent >= 50) {
+      elBar.style.background = "#22c55e";
+    } else if (percent >= 0) {
+      elBar.style.background = "#7c3aed";
+    } else {
+      elBar.style.background = "#ef4444";
+    }
   }
 }
 
@@ -257,15 +298,15 @@ function generateOneSet(seed) {
 
 function generateByBiorhythm() {
   const lang = document.documentElement.lang || 'ko';
-  const birthValue = document.getElementById("birthDate").value;
+  const birthDateInput = document.getElementById("birthDate");
   const lottoButton = document.getElementById("lottoButton");
 
-  if (!birthValue) {
+  if (!birthDateInput || !birthDateInput.value) {
     alert(translations[lang].alert_birthdate_missing);
     return;
   }
 
-  const birthDate = new Date(birthValue);
+  const birthDate = new Date(birthDateInput.value);
   const today = new Date();
   const livedDays = daysBetween(birthDate, today);
 
@@ -283,7 +324,8 @@ function generateByBiorhythm() {
       const emotional = calcBiorhythm(livedDays, 28);
       const intellectual = calcBiorhythm(livedDays, 33);
 
-      document.getElementById("bioBox").style.display = "block";
+      const elBioBox = document.getElementById("bioBox");
+      if (elBioBox) elBioBox.style.display = "block";
 
       updateBioUI("physicalText", "physicalBar", physical);
       updateBioUI("emotionalText", "emotionalBar", emotional);
@@ -296,35 +338,37 @@ function generateByBiorhythm() {
         Math.round(intellectual * 1000);
 
       const resultBox = document.getElementById("result");
-      resultBox.innerHTML = "";
+      if (resultBox) {
+        resultBox.innerHTML = "";
 
-      for (let i = 1; i <= 5; i++) {
-        const lotto = generateOneSet(bioSeed + i * 77);
+        for (let i = 1; i <= 5; i++) {
+          const lotto = generateOneSet(bioSeed + i * 77);
 
-        const setBox = document.createElement("div");
-        setBox.className = "set";
+          const setBox = document.createElement("div");
+          setBox.className = "set";
 
-        const title = document.createElement("div");
-        title.className = "set-title";
-        title.textContent = i + translations[lang].lotto_set_label;
+          const title = document.createElement("div");
+          title.className = "set-title";
+          title.textContent = i + translations[lang].lotto_set_label;
 
-        setBox.appendChild(title);
+          setBox.appendChild(title);
 
-        lotto.main.forEach(num => {
-          setBox.appendChild(createBall(num));
-        });
+          lotto.main.forEach(num => {
+            setBox.appendChild(createBall(num));
+          });
 
-        const bonusLabel = document.createElement("div");
-        bonusLabel.className = "bonus-label";
-        bonusLabel.textContent = translations[lang].lotto_bonus_label;
+          const bonusLabel = document.createElement("div");
+          bonusLabel.className = "bonus-label";
+          bonusLabel.textContent = translations[lang].lotto_bonus_label;
 
-        setBox.appendChild(bonusLabel);
-        setBox.appendChild(createBall(lotto.bonus, true));
+          setBox.appendChild(bonusLabel);
+          setBox.appendChild(createBall(lotto.bonus, true));
 
-        resultBox.appendChild(setBox);
+          resultBox.appendChild(setBox);
+        }
+        
+        if (elBioBox) elBioBox.scrollIntoView({ behavior: 'smooth' });
       }
-      
-      document.getElementById("bioBox").scrollIntoView({ behavior: 'smooth' });
 
     } finally {
       lottoButton.disabled = false;
