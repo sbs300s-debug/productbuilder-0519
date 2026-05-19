@@ -28,6 +28,7 @@ const translations = {
     placeholder_email: "example@email.com",
     placeholder_subject: "문의 제목을 입력해주세요.",
     placeholder_message: "문의하실 내용을 상세히 적어주세요.",
+    commentsTitle: "댓글 (Comments)",
     service: {
       ai: "AI 디자인은 인공지능을 활용하여 빠르고 효율적으로 시안을 제작합니다. 브랜드의 아이덴티티에 맞는 감각적인 디자인을 만나보세요.",
       detail: "상세페이지는 고객의 구매를 유도하는 중요한 요소입니다. 제품의 특장점을 분석하여 설득력 있는 스토리로 구성합니다.",
@@ -141,6 +142,32 @@ const translations = {
   }
 };
 
+function loadGiscus(lang) {
+  const giscusContainer = document.querySelector('.giscus');
+  if (!giscusContainer) return;
+
+  // Clear existing content
+  giscusContainer.innerHTML = '';
+
+  const script = document.createElement('script');
+  script.src = 'https://giscus.app/client.js';
+  script.setAttribute('data-repo', 'sbs300s-debug/productbuilder-0519');
+  script.setAttribute('data-repo-id', 'R_kgDONGqVWA');
+  script.setAttribute('data-category', 'General');
+  script.setAttribute('data-category-id', 'DIC_kwDONGqVWM4Cjr4W');
+  script.setAttribute('data-mapping', 'pathname');
+  script.setAttribute('data-strict', '0');
+  script.setAttribute('data-reactions-enabled', '1');
+  script.setAttribute('data-emit-metadata', '0');
+  script.setAttribute('data-input-position', 'bottom');
+  script.setAttribute('data-theme', 'light');
+  script.setAttribute('data-lang', lang === 'zh' ? 'zh-CN' : lang);
+  script.setAttribute('crossorigin', 'anonymous');
+  script.async = true;
+
+  giscusContainer.appendChild(script);
+}
+
 function changeLanguage(lang) {
   if (!translations[lang]) return;
   
@@ -188,6 +215,10 @@ function changeLanguage(lang) {
   
   const elContactDesc = document.getElementById('contactDesc');
   if (elContactDesc) elContactDesc.innerHTML = translations[lang].contactDesc;
+
+  // 댓글 섹션 제목 번역
+  const elCommentsTitle = document.getElementById('commentsTitle');
+  if (elCommentsTitle) elCommentsTitle.textContent = translations[lang].commentsTitle;
   
   const labels = document.querySelectorAll('.contact-form label');
   if (labels.length >= 4) {
@@ -211,6 +242,9 @@ function changeLanguage(lang) {
   
   const elSubmit = document.querySelector('.submit-button');
   if (elSubmit) elSubmit.textContent = translations[lang].form_submit;
+
+  // Load Giscus with the current language
+  loadGiscus(lang);
 }
 
 function showService(service) {
