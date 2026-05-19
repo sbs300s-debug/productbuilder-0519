@@ -1,3 +1,4 @@
+
 const translations = {
   ko: {
     tagline: "AI와 디자인으로 새로운 가능성을 만드는 크리에이티브 스튜디오",
@@ -13,6 +14,10 @@ const translations = {
     lottoDesc: "생년월일을 입력하면 오늘의 바이오리듬을 계산해<br>나만의 로또 번호 5세트와 보너스 번호를 추천해드립니다.",
     lottoButton: "번호 추천받기",
     loading: "번호 생성 중...",
+    alert_birthdate_missing: "생년월일을 먼저 입력해주세요.",
+    alert_birthdate_invalid: "생년월일을 다시 확인해주세요.",
+    lotto_set_label: "세트",
+    lotto_bonus_label: "+ 보너스",
     service: {
       ai: "AI 디자인은 인공지능을 활용하여 빠르고 효율적으로 시안을 제작합니다. 브랜드의 아이덴티티에 맞는 감각적인 디자인을 만나보세요.",
       detail: "상세페이지는 고객의 구매를 유도하는 중요한 요소입니다. 제품의 특장점을 분석하여 설득력 있는 스토리로 구성합니다.",
@@ -33,6 +38,10 @@ const translations = {
     lottoDesc: "Enter your date of birth to calculate today's biorhythm<br>and get 5 sets of personalized lotto numbers and a bonus number.",
     lottoButton: "Get Recommendations",
     loading: "Generating numbers...",
+    alert_birthdate_missing: "Please enter your date of birth first.",
+    alert_birthdate_invalid: "Please check your date of birth again.",
+    lotto_set_label: "Set",
+    lotto_bonus_label: "+ Bonus",
     service: {
       ai: "AI Design uses artificial intelligence to create proposals quickly and efficiently. Discover a sensational design that fits your brand's identity.",
       detail: "The detail page is a crucial element that drives customer purchases. We analyze the product's features and structure a compelling story.",
@@ -53,6 +62,10 @@ const translations = {
     lottoDesc: "生年月日を入力すると、今日のバイオリズムを計算し、<br>あなた専用のロト番号5セットとボーナス番号を提案します。",
     lottoButton: "番号を生成する",
     loading: "番号を生成中...",
+    alert_birthdate_missing: "まず生年月日を入力してください。",
+    alert_birthdate_invalid: "生年月日をもう一度確認してください。",
+    lotto_set_label: "セット",
+    lotto_bonus_label: "+ ボーナス",
     service: {
       ai: "AIデザインは、人工知能を活用して迅速かつ効率的に案を作成します。ブランドのアイデンティティに合った感覚的なデザインを体験してください。",
       detail: "詳細ページは、顧客の購入を誘導する重要な要素です。製品の特徴を分析し、説得力のあるストーリーで構成します。",
@@ -73,6 +86,10 @@ const translations = {
     lottoDesc: "输入您的出生日期，计算今天的生物节律，<br>并为您推荐5组个性化的乐透号码和1个奖励号码。",
     lottoButton: "获取号码推荐",
     loading: "号码生成中...",
+    alert_birthdate_missing: "请先输入您的出生日期。",
+    alert_birthdate_invalid: "请再次检查您的出生日期。",
+    lotto_set_label: "组",
+    lotto_bonus_label: "+ 奖励",
     service: {
         ai: "AI设计利用人工智能快速高效地制作设计草案。探索符合品牌身份的感性设计。",
         detail: "详情页是引导客户购买的关键。通过分析产品特长，构建具有说服力的故事情节。",
@@ -183,11 +200,7 @@ function generateByBiorhythm() {
   const lottoButton = document.getElementById("lottoButton");
 
   if (!birthValue) {
-    const alertMsg = lang === 'ko' ? "생년월일을 먼저 입력해주세요." : 
-                     lang === 'en' ? "Please enter your date of birth first." :
-                     lang === 'ja' ? "まず生年月日を入力してください。" :
-                     "请先输入您的出生日期。";
-    alert(alertMsg);
+    alert(translations[lang].alert_birthdate_missing);
     return;
   }
 
@@ -196,80 +209,69 @@ function generateByBiorhythm() {
   const livedDays = daysBetween(birthDate, today);
 
   if (livedDays < 0) {
-    const alertMsg = lang === 'ko' ? "생년월일을 다시 확인해주세요." : 
-                     lang === 'en' ? "Please check your date of birth again." :
-                     lang === 'ja' ? "生年月日をもう一度確認してください。" :
-                     "请再次检查您的出生日期。";
-    alert(alertMsg);
+    alert(translations[lang].alert_birthdate_invalid);
     return;
   }
 
-  // Visual feedback
-  const originalText = lottoButton.textContent;
   lottoButton.disabled = true;
-  lottoButton.textContent = translations[lang].loading || "Loading...";
+  lottoButton.textContent = translations[lang].loading;
 
   setTimeout(() => {
-    const physical = calcBiorhythm(livedDays, 23);
-    const emotional = calcBiorhythm(livedDays, 28);
-    const intellectual = calcBiorhythm(livedDays, 33);
+    try {
+      const physical = calcBiorhythm(livedDays, 23);
+      const emotional = calcBiorhythm(livedDays, 28);
+      const intellectual = calcBiorhythm(livedDays, 33);
 
-    document.getElementById("bioBox").style.display = "block";
+      document.getElementById("bioBox").style.display = "block";
 
-    updateBioUI("physicalText", "physicalBar", physical);
-    updateBioUI("emotionalText", "emotionalBar", emotional);
-    updateBioUI("intellectualText", "intellectualBar", intellectual);
+      updateBioUI("physicalText", "physicalBar", physical);
+      updateBioUI("emotionalText", "emotionalBar", emotional);
+      updateBioUI("intellectualText", "intellectualBar", intellectual);
 
-    const bioSeed =
-      livedDays +
-      Math.round(physical * 1000) +
-      Math.round(emotional * 1000) +
-      Math.round(intellectual * 1000);
+      const bioSeed =
+        livedDays +
+        Math.round(physical * 1000) +
+        Math.round(emotional * 1000) +
+        Math.round(intellectual * 1000);
 
-    const resultBox = document.getElementById("result");
-    resultBox.innerHTML = "";
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = "";
 
-    for (let i = 1; i <= 5; i++) {
-      const lotto = generateOneSet(bioSeed + i * 77);
+      for (let i = 1; i <= 5; i++) {
+        const lotto = generateOneSet(bioSeed + i * 77);
 
-      const setBox = document.createElement("div");
-      setBox.className = "set";
+        const setBox = document.createElement("div");
+        setBox.className = "set";
 
-      const title = document.createElement("div");
-      title.className = "set-title";
-      const setLabel = lang === 'ko' ? "세트" : 
-                       lang === 'en' ? "Set" :
-                       lang === 'ja' ? "セット" : "组";
-      title.textContent = i + setLabel;
+        const title = document.createElement("div");
+        title.className = "set-title";
+        title.textContent = i + translations[lang].lotto_set_label;
 
-      setBox.appendChild(title);
+        setBox.appendChild(title);
 
-      lotto.main.forEach(num => {
-        setBox.appendChild(createBall(num));
-      });
+        lotto.main.forEach(num => {
+          setBox.appendChild(createBall(num));
+        });
 
-      const bonusLabel = document.createElement("div");
-      bonusLabel.className = "bonus-label";
-      const bonusText = lang === 'ko' ? "+ 보너스" : 
-                        lang === 'en' ? "+ Bonus" :
-                        lang === 'ja' ? "+ ボーナス" : "+ 奖励";
-      bonusLabel.textContent = bonusText;
+        const bonusLabel = document.createElement("div");
+        bonusLabel.className = "bonus-label";
+        bonusLabel.textContent = translations[lang].lotto_bonus_label;
 
-      setBox.appendChild(bonusLabel);
-      setBox.appendChild(createBall(lotto.bonus, true));
+        setBox.appendChild(bonusLabel);
+        setBox.appendChild(createBall(lotto.bonus, true));
 
-      resultBox.appendChild(setBox);
+        resultBox.appendChild(setBox);
+      }
+      
+      document.getElementById("bioBox").scrollIntoView({ behavior: 'smooth' });
+
+    } finally {
+      lottoButton.disabled = false;
+      lottoButton.textContent = translations[lang].lottoButton;
     }
-
-    lottoButton.disabled = false;
-    lottoButton.textContent = originalText;
-    
-    // Smooth scroll to result
-    document.getElementById("bioBox").scrollIntoView({ behavior: 'smooth' });
-  }, 600);
+  }, 100);
 }
 
-// Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
   const lottoButton = document.getElementById('lottoButton');
   if (lottoButton) {
@@ -297,4 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showService(card.getAttribute('data-service'));
     });
   });
+
+  changeLanguage(document.documentElement.lang || 'ko');
 });
