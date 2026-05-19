@@ -1,4 +1,3 @@
-
 const translations = {
   ko: {
     tagline: "AI와 디자인으로 새로운 가능성을 만드는 크리에이티브 스튜디오",
@@ -18,6 +17,17 @@ const translations = {
     alert_birthdate_invalid: "생년월일을 다시 확인해주세요.",
     lotto_set_label: "세트",
     lotto_bonus_label: "+ 보너스",
+    contactTitle: "제휴 문의",
+    contactDesc: "NOVAIX와 함께 새로운 가치를 만들어가실 파트너분들의 연락을 기다립니다.<br>아래 양식을 작성해 주시면 검토 후 연락드리겠습니다.",
+    form_name: "성함/업체명",
+    form_email: "이메일 주소",
+    form_subject: "문의 제목",
+    form_message: "문의 내용",
+    form_submit: "문의하기",
+    placeholder_name: "성함 또는 업체명을 입력해주세요.",
+    placeholder_email: "example@email.com",
+    placeholder_subject: "문의 제목을 입력해주세요.",
+    placeholder_message: "문의하실 내용을 상세히 적어주세요.",
     service: {
       ai: "AI 디자인은 인공지능을 활용하여 빠르고 효율적으로 시안을 제작합니다. 브랜드의 아이덴티티에 맞는 감각적인 디자인을 만나보세요.",
       detail: "상세페이지는 고객의 구매를 유도하는 중요한 요소입니다. 제품의 특장점을 분석하여 설득력 있는 스토리로 구성합니다.",
@@ -42,6 +52,17 @@ const translations = {
     alert_birthdate_invalid: "Please check your date of birth again.",
     lotto_set_label: "Set",
     lotto_bonus_label: "+ Bonus",
+    contactTitle: "Partnership Inquiry",
+    contactDesc: "We look forward to hearing from partners who want to create new value with NOVAIX.<br>Please fill out the form below and we will get back to you after review.",
+    form_name: "Name/Company",
+    form_email: "Email Address",
+    form_subject: "Subject",
+    form_message: "Message",
+    form_submit: "Send Inquiry",
+    placeholder_name: "Please enter your name or company.",
+    placeholder_email: "example@email.com",
+    placeholder_subject: "Please enter the subject.",
+    placeholder_message: "Please describe your inquiry in detail.",
     service: {
       ai: "AI Design uses artificial intelligence to create proposals quickly and efficiently. Discover a sensational design that fits your brand's identity.",
       detail: "The detail page is a crucial element that drives customer purchases. We analyze the product's features and structure a compelling story.",
@@ -66,6 +87,17 @@ const translations = {
     alert_birthdate_invalid: "生年月日をもう一度確認してください。",
     lotto_set_label: "セット",
     lotto_bonus_label: "+ ボーナス",
+    contactTitle: "提携のお問い合わせ",
+    contactDesc: "NOVAIXと共に新しい価値を創造してくださるパートナー様からのご連絡をお待ちしております。<br>以下のフォームにご記入いただければ、検討後、担当者よりご連絡させていただきます。",
+    form_name: "お名前/貴社名",
+    form_email: "メールアドレス",
+    form_subject: "件名",
+    form_message: "お問い合わせ内容",
+    form_submit: "送信する",
+    placeholder_name: "お名前または貴社名を入力してください。",
+    placeholder_email: "example@email.com",
+    placeholder_subject: "件名を入力してください。",
+    placeholder_message: "お問い合わせ内容を詳しくご記入ください。",
     service: {
       ai: "AIデザインは、人工知能を活用して迅速かつ効率的に案を作成します。ブランドのアイデンティティに合った感覚的なデザインを体験してください。",
       detail: "詳細ページは、顧客の購入を誘導する重要な要素です。製品の特徴を分析し、説得力のあるストーリーで構成します。",
@@ -75,7 +107,7 @@ const translations = {
   zh: {
     tagline: "用AI与设计创造新可能性的创意工作室",
     intro: "NOVAIX 是结合 AI 技术与现代设计的创意工作室，致力于品牌、详情页、内容及网页制作。",
-    serviceResultDefault: "请点击您感兴趣的领域。",
+    serviceResultDefault: "请点击您感兴趣의领域。",
     card_title_ai: "AI设计",
     card_desc_ai: "利用AI进行快速且富有感性的设计工作",
     card_title_detail: "详情页",
@@ -90,6 +122,17 @@ const translations = {
     alert_birthdate_invalid: "请再次检查您的出生日期。",
     lotto_set_label: "组",
     lotto_bonus_label: "+ 奖励",
+    contactTitle: "商务合作",
+    contactDesc: "我们期待与希望与 NOVAIX 共同创造新价值的伙伴合作。<br>请填写以下表格，我们将在审核后与您联系。",
+    form_name: "姓名/公司名称",
+    form_email: "电子邮件地址",
+    form_subject: "咨询主题",
+    form_message: "咨询内容",
+    form_submit: "提交咨询",
+    placeholder_name: "请输入您的姓名或公司名称。",
+    placeholder_email: "example@email.com",
+    placeholder_subject: "请输入咨询主题。",
+    placeholder_message: "请详细说明您的咨询内容。",
     service: {
         ai: "AI设计利用人工智能快速高效地制作设计草案。探索符合品牌身份的感性设计。",
         detail: "详情页是引导客户购买的关键。通过分析产品特长，构建具有说服力的故事情节。",
@@ -114,6 +157,24 @@ function changeLanguage(lang) {
   document.getElementById('lottoTitle').textContent = translations[lang].lottoTitle;
   document.getElementById('lottoDesc').innerHTML = translations[lang].lottoDesc;
   document.getElementById('lottoButton').textContent = translations[lang].lottoButton;
+
+  // 제휴 문의 섹션 번역
+  document.getElementById('contactTitle').textContent = translations[lang].contactTitle;
+  document.getElementById('contactDesc').innerHTML = translations[lang].contactDesc;
+  
+  const labels = document.querySelectorAll('.contact-form label');
+  if (labels.length >= 4) {
+    labels[0].textContent = translations[lang].form_name;
+    labels[1].textContent = translations[lang].form_email;
+    labels[2].textContent = translations[lang].form_subject;
+    labels[3].textContent = translations[lang].form_message;
+  }
+
+  document.getElementById('name').placeholder = translations[lang].placeholder_name;
+  document.getElementById('email').placeholder = translations[lang].placeholder_email;
+  document.getElementById('subject').placeholder = translations[lang].placeholder_subject;
+  document.getElementById('message').placeholder = translations[lang].placeholder_message;
+  document.querySelector('.submit-button').textContent = translations[lang].form_submit;
 }
 
 function showService(service) {
